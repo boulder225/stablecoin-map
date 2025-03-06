@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ConcordiumWardleyMap from './stablecoin-ma';
+import ConcordiumWardleyMap from './stablecoin-map';
 
 function App() {
   return (
