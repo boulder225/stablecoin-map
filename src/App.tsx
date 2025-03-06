@@ -1,24 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ConcordiumWardleyMap from './stablecoin-ma';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Concordium Stablecoin Infrastructure</h1>
       </header>
+      <main style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+        <ConcordiumWardleyMap />
+      </main>
     </div>
   );
 }
