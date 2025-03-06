@@ -1,10 +1,30 @@
+// Create this file as CleanInteractiveConcordiumMap.tsx in your project
+
 import React, { useState } from 'react';
 
-const CleanInteractiveConcordiumMap = () => {
-  const [hoveredComponent, setHoveredComponent] = useState(null);
+// Define types for components and connections
+interface Component {
+  id: string;
+  x: number;
+  y: number;
+  radius: number;
+  label: string;
+  name: string;
+  layer: string;
+  evolution: string;
+  description: string;
+}
+
+interface Connection {
+  from: string;
+  to: string;
+}
+
+const CleanInteractiveConcordiumMap: React.FC = () => {
+  const [hoveredComponent, setHoveredComponent] = useState<Component | null>(null);
   
   // Define the components with their positions and details
-  const components = [
+  const components: Component[] = [
     // Visible/User Need Layer
     {
       id: 'st',
@@ -138,7 +158,7 @@ const CleanInteractiveConcordiumMap = () => {
   ];
   
   // Define connections between components
-  const connections = [
+  const connections: Connection[] = [
     // User Need to Value Creation
     { from: 'st', to: 'plt' },
     { from: 'pb', to: 'lm' },
@@ -160,13 +180,13 @@ const CleanInteractiveConcordiumMap = () => {
     { from: 'bft', to: 'bp' }
   ];
   
-  // Function to find a component by ID
-  const findComponent = (id) => {
+  // Function to find a component by ID - Fixed with type
+  const findComponent = (id: string): Component | undefined => {
     return components.find(comp => comp.id === id);
   };
   
   // Function to determine color based on hovering state
-  const getCircleColor = (component) => {
+  const getCircleColor = (component: Component): string => {
     const baseColor = '#3498db';
     if (hoveredComponent) {
       if (hoveredComponent.id === component.id) {
@@ -184,7 +204,7 @@ const CleanInteractiveConcordiumMap = () => {
   };
   
   // Function to determine opacity based on hovering state
-  const getCircleOpacity = (component) => {
+  const getCircleOpacity = (component: Component): number => {
     if (hoveredComponent) {
       if (hoveredComponent.id === component.id) {
         return 1;
@@ -200,7 +220,7 @@ const CleanInteractiveConcordiumMap = () => {
   };
   
   // Function to determine connection lines' styles
-  const getLineStyles = (connection) => {
+  const getLineStyles = (connection: Connection): {stroke: string; strokeOpacity: number; strokeWidth: number} => {
     if (!hoveredComponent) {
       return {
         stroke: '#3498db',
@@ -221,11 +241,11 @@ const CleanInteractiveConcordiumMap = () => {
   };
 
   // Using the proper handler function to avoid flickering 
-  const handleMouseEnter = (component) => {
+  const handleMouseEnter = (component: Component): void => {
     setHoveredComponent(component);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (): void => {
     setHoveredComponent(null);
   };
 
@@ -237,44 +257,47 @@ const CleanInteractiveConcordiumMap = () => {
       {/* SVG for the Wardley Map */}
       <svg width="800" height="600" style={{ position: 'absolute' }}>
         {/* Axes */}
-        <line x1="100" y1="100" x2="100" y2="550" stroke="#333" strokeWidth="2" />
-        <line x1="100" y1="550" x2="750" y2="550" stroke="#333" strokeWidth="2" />
+        <line x1={100} y1={100} x2={100} y2={550} stroke="#333" strokeWidth={2} />
+        <line x1={100} y1={550} x2={750} y2={550} stroke="#333" strokeWidth={2} />
         
         {/* X-axis labels */}
-        <text x="150" y="580" fontSize="14" textAnchor="middle">Genesis</text>
-        <text x="300" y="580" fontSize="14" textAnchor="middle">Custom-Built</text>
-        <text x="500" y="580" fontSize="14" textAnchor="middle">Product</text>
-        <text x="700" y="580" fontSize="14" textAnchor="middle">Commodity/Utility</text>
+        <text x={150} y={580} fontSize={14} textAnchor="middle">Genesis</text>
+        <text x={300} y={580} fontSize={14} textAnchor="middle">Custom-Built</text>
+        <text x={500} y={580} fontSize={14} textAnchor="middle">Product</text>
+        <text x={700} y={580} fontSize={14} textAnchor="middle">Commodity/Utility</text>
         
         {/* Y-axis labels */}
-        <text x="80" y="130" fontSize="14" textAnchor="end">Visible/</text>
-        <text x="80" y="150" fontSize="14" textAnchor="end">User Need</text>
+        <text x={80} y={130} fontSize={14} textAnchor="end">Visible/</text>
+        <text x={80} y={150} fontSize={14} textAnchor="end">User Need</text>
         
-        <text x="80" y="230" fontSize="14" textAnchor="end">Value Creation</text>
+        <text x={80} y={230} fontSize={14} textAnchor="end">Value Creation</text>
         
-        <text x="80" y="330" fontSize="14" textAnchor="end">Trust &</text>
-        <text x="80" y="350" fontSize="14" textAnchor="end">Compliance</text>
+        <text x={80} y={330} fontSize={14} textAnchor="end">Trust &</text>
+        <text x={80} y={350} fontSize={14} textAnchor="end">Compliance</text>
         
-        <text x="80" y="430" fontSize="14" textAnchor="end">Enabling</text>
-        <text x="80" y="450" fontSize="14" textAnchor="end">Infrastructure</text>
+        <text x={80} y={430} fontSize={14} textAnchor="end">Enabling</text>
+        <text x={80} y={450} fontSize={14} textAnchor="end">Infrastructure</text>
         
-        <text x="80" y="530" fontSize="14" textAnchor="end">Foundation</text>
+        <text x={80} y={530} fontSize={14} textAnchor="end">Foundation</text>
         
         {/* Evolution stage lines */}
-        <line x1="200" y1="100" x2="200" y2="550" stroke="#ccc" strokeWidth="1" strokeDasharray="5,5" />
-        <line x1="400" y1="100" x2="400" y2="550" stroke="#ccc" strokeWidth="1" strokeDasharray="5,5" />
-        <line x1="600" y1="100" x2="600" y2="550" stroke="#ccc" strokeWidth="1" strokeDasharray="5,5" />
+        <line x1={200} y1={100} x2={200} y2={550} stroke="#ccc" strokeWidth={1} strokeDasharray="5,5" />
+        <line x1={400} y1={100} x2={400} y2={550} stroke="#ccc" strokeWidth={1} strokeDasharray="5,5" />
+        <line x1={600} y1={100} x2={600} y2={550} stroke="#ccc" strokeWidth={1} strokeDasharray="5,5" />
         
         {/* Value chain horizontal lines */}
-        <line x1="100" y1="200" x2="750" y2="200" stroke="#ccc" strokeWidth="1" strokeDasharray="5,5" />
-        <line x1="100" y1="300" x2="750" y2="300" stroke="#ccc" strokeWidth="1" strokeDasharray="5,5" />
-        <line x1="100" y1="400" x2="750" y2="400" stroke="#ccc" strokeWidth="1" strokeDasharray="5,5" />
-        <line x1="100" y1="500" x2="750" y2="500" stroke="#ccc" strokeWidth="1" strokeDasharray="5,5" />
+        <line x1={100} y1={200} x2={750} y2={200} stroke="#ccc" strokeWidth={1} strokeDasharray="5,5" />
+        <line x1={100} y1={300} x2={750} y2={300} stroke="#ccc" strokeWidth={1} strokeDasharray="5,5" />
+        <line x1={100} y1={400} x2={750} y2={400} stroke="#ccc" strokeWidth={1} strokeDasharray="5,5" />
+        <line x1={100} y1={500} x2={750} y2={500} stroke="#ccc" strokeWidth={1} strokeDasharray="5,5" />
         
         {/* Connecting lines */}
         {connections.map(connection => {
           const from = findComponent(connection.from);
           const to = findComponent(connection.to);
+          
+          if (!from || !to) return null;
+          
           const styles = getLineStyles(connection);
           
           return (
@@ -314,7 +337,7 @@ const CleanInteractiveConcordiumMap = () => {
               <text 
                 x={component.x} 
                 y={component.y} 
-                fontSize="12" 
+                fontSize={12} 
                 textAnchor="middle" 
                 fill="white" 
                 dominantBaseline="middle"
@@ -326,7 +349,7 @@ const CleanInteractiveConcordiumMap = () => {
         })}
         
         {/* Title */}
-        <text x="400" y="50" fontSize="20" fontWeight="bold" textAnchor="middle">
+        <text x={400} y={50} fontSize={20} fontWeight="bold" textAnchor="middle">
           Concordium Stablecoin Infrastructure Wardley Map
         </text>
       </svg>
